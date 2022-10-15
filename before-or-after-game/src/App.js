@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
 import logo from './logo.svg';
 import './App.css';
 
@@ -130,8 +131,8 @@ class App extends Component {
             </div>
         );
         var displayDiv = (
-            <div id='gameInstructions'>
-                <Typography variant='h2'>How to play:</Typography>
+            <div id='gameInstructions' className='mainContent'>
+                <Typography variant='h4'>How to play:</Typography>
                 <Typography variant='body1'>
                     I will select a random word from the English dictionary. Your job is to guess my
                     word in as few guesses as possible.
@@ -148,7 +149,7 @@ class App extends Component {
         );
 
         if (this.state.loading) {
-            displayDiv = <p>Loading...</p>;
+            displayDiv = <CircularProgress className='mainContent'></CircularProgress>;
         } else if (this.state.errorInit) {
             displayDiv = (
                 <div>
@@ -160,13 +161,16 @@ class App extends Component {
             );
         } else if (this.state.gameInProgress) {
             displayDiv = (
-                <div id='gameDiv'>
+                <div id='gameDiv' className='mainContent'>
                     {this.state.guesses.length == 0 ? (
                         <Typography variant='body1'>I have chosen my word.</Typography>
                     ) : (
                         <>
                             <Typography variant='body1'>
                                 Guesses: {this.state.guesses.length}
+                            </Typography>
+                            <Typography>
+                                Previous Guesses: {JSON.stringify(this.state.guesses)}
                             </Typography>
                             <Typography variant='body1'>
                                 My word is <b>{this.state.beforeOrAfter}</b> the word{' '}
@@ -211,9 +215,9 @@ class App extends Component {
         }
         return (
             <div className='App'>
-                <Typography variant='h1'>Before Or After word game!</Typography>
+                <Typography variant='h3'>Before Or After word game!</Typography>
                 {displayDiv}
-                {stateDebug}
+                {/* {stateDebug} */}
                 <footer>
                     <Typography variant='body2'>Made w/ ♥️ for Austie</Typography>
                     <Typography variant='body2'>By TrainBoi 👨🏽‍🦲🚂🚃🚃🚃🚃🚃🚃🚃</Typography>
@@ -226,8 +230,8 @@ class App extends Component {
         // Parse dictionary result
 
         return (
-            <div>
-                <Typography variant='h3'>Victory!!</Typography>
+            <div className='mainContent'>
+                <Typography variant='h4'>Victory!!</Typography>
                 <Typography variant='body1'>
                     The correct word was <b>{this.state.correctWord}</b>
                 </Typography>
@@ -236,6 +240,13 @@ class App extends Component {
                 </Typography>
                 <Typography variant='h6'>Definition:</Typography>
                 <Typography variant='body1'>{'DEFINITION COMING SOON :)'} </Typography>
+                <Typography variant='body1'>
+                    Jk, but you have to go to{' '}
+                    <a href={'https://www.dictionary.com/browse/' + this.state.correctWord}>
+                        {' '}
+                        THIS site
+                    </a>
+                </Typography>
 
                 <Button onClick={this.startGame} variant='contained' size='large'>
                     Play Again
